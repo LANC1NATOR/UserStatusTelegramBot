@@ -35,8 +35,7 @@ def reply(update, context):
     elif status != (1 and 0):
         update.message.reply_text(f"User vk.com/{user_id} cannot be found!")
     elif status == 0:
-        update.message.reply_text(f"User vk.com/{user_id} is offline. I will "
-                                  f"let you know, when the status changes.")
+        update.message.reply_text(f"User vk.com/{user_id} is offline.")
 
 
 def main():
