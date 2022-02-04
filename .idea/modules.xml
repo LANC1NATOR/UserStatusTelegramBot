@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/VK_API_TELEGRAM_BOT.iml" filepath="$PROJECT_DIR$/.idea/VK_API_TELEGRAM_BOT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/UserStatusTelegramBot.iml" filepath="$PROJECT_DIR$/.idea/UserStatusTelegramBot.iml" />
     </modules>
   </component>
 </project>
