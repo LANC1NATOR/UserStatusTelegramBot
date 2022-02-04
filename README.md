@@ -1,2 +1,2 @@
-# VK_API_TELEGRAM_BOT
-Telegram Bot gives information about user's status on vk.com. It's my studying project;)
+# UserStatusTelegramBot
+With the help of VK API this Telegram Bot gives information about user's status on vk.com. (https://t.me/T1TYABot) It's my study project;)
