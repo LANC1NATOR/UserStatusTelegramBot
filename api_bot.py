@@ -56,7 +56,7 @@ def main():
                           url_path=TELEGRAM_TOKEN,
                           webhook_url='https://vk-status-check.herokuapp.com/'
                                       + TELEGRAM_TOKEN)
-    updater.idle()
+
 
 
 if __name__ == '__main__':
