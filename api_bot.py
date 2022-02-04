@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 load_dotenv()
 
+PORT = int(os.environ.get('PORT', 5000))
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 VK_AUTH_TOKEN = os.getenv('VK_AUTH_TOKEN')
 
@@ -49,7 +50,11 @@ def main():
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.text, reply))
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TELEGRAM_TOKEN)
+    updater.bot.setWebhook('https://vk-status-check.herokuapp.com/'
+                           + TELEGRAM_TOKEN)
     updater.idle()
 
 
