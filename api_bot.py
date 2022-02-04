@@ -9,18 +9,9 @@ load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 VK_AUTH_TOKEN = os.getenv('VK_AUTH_TOKEN')
 
-run_flag = None
-
 
 def start(update, context):
-    global run_flag
-    run_flag = True
     update.message.reply_text('Hello! Give me the user ID!')
-
-def stop(update, context):
-    global run_flag
-    run_flag = False
-    update.message.reply_text("Okay! I'm going to bed.")
 
 
 def get_status(user_id):
@@ -46,19 +37,12 @@ def reply(update, context):
     elif status == 0:
         update.message.reply_text(f"User vk.com/{user_id} is offline. I will "
                                   f"let you know, when the status changes.")
-        while run_flag:
-            status = get_status(user_id)
-            if status == 1:
-                update.message.reply_text(f"User vk.com/{user_id} is online!")
-                break
-            time.sleep(5)
 
 
 def main():
     updater = Updater(token=TELEGRAM_TOKEN, use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("stop", stop))
     dp.add_handler(MessageHandler(Filters.text, reply))
     updater.start_polling()
 
