@@ -37,22 +37,21 @@ def get_status(user_id):
 
 
 def reply(update, context):
-    while run_flag:
-        user_id = update.message.text
-        status = get_status(user_id)
-        if status == 1:
-            update.message.reply_text(f"User @{user_id} is online!")
-        elif status != (1 and 0):
-            update.message.reply_text(f"User @{user_id} cannot be found!")
-        elif status == 0:
-            update.message.reply_text(f"User @{user_id} is offline. I will let "
-                                      f"you know, when the status changes.")
-            while True:
-                status = get_status(user_id)
-                if status == 1:
-                    update.message.reply_text(f"User @{user_id} is online!")
-                    break
-                time.sleep(5)
+    user_id = update.message.text
+    status = get_status(user_id)
+    if status == 1:
+        update.message.reply_text(f"User vk.com/{user_id} is online!")
+    elif status != (1 and 0):
+        update.message.reply_text(f"User vk.com/{user_id} cannot be found!")
+    elif status == 0:
+        update.message.reply_text(f"User vk.com/{user_id} is offline. I will "
+                                  f"let you know, when the status changes.")
+        while run_flag:
+            status = get_status(user_id)
+            if status == 1:
+                update.message.reply_text(f"User vk.com/{user_id} is online!")
+                break
+            time.sleep(5)
 
 
 def main():
