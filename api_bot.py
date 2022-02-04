@@ -6,13 +6,21 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 load_dotenv()
 
-# PORT = int(os.environ.get('PORT', 8443))
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 VK_AUTH_TOKEN = os.getenv('VK_AUTH_TOKEN')
 
+run_flag = None
+
 
 def start(update, context):
+    global run_flag
+    run_flag = True
     update.message.reply_text('Hello! Give me the user ID!')
+
+def stop(update, context):
+    global run_flag
+    run_flag = False
+    update.message.reply_text("Okay! I'm going to bed.")
 
 
 def get_status(user_id):
@@ -29,33 +37,30 @@ def get_status(user_id):
 
 
 def reply(update, context):
-    user_id = update.message.text
-    status = get_status(user_id)
-    if status == 1:
-        update.message.reply_text(f"User @{user_id} is online!")
-    elif status != (1 and 0):
-        update.message.reply_text(f"User @{user_id} cannot be found!")
-    elif status == 0:
-        update.message.reply_text(f"User @{user_id} is offline. I will let "
-                                  f"you know, when the status changes.")
-        while True:
-            status = get_status(user_id)
-            if status == 1:
-                update.message.reply_text(f"User @{user_id} is online!")
-                break
-            time.sleep(5)
+    while run_flag:
+        user_id = update.message.text
+        status = get_status(user_id)
+        if status == 1:
+            update.message.reply_text(f"User @{user_id} is online!")
+        elif status != (1 and 0):
+            update.message.reply_text(f"User @{user_id} cannot be found!")
+        elif status == 0:
+            update.message.reply_text(f"User @{user_id} is offline. I will let "
+                                      f"you know, when the status changes.")
+            while True:
+                status = get_status(user_id)
+                if status == 1:
+                    update.message.reply_text(f"User @{user_id} is online!")
+                    break
+                time.sleep(5)
 
 
 def main():
     updater = Updater(token=TELEGRAM_TOKEN, use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("stop", stop))
     dp.add_handler(MessageHandler(Filters.text, reply))
-    # updater.start_webhook(listen="0.0.0.0",
-    #                       port=int(PORT),
-    #                       url_path=TELEGRAM_TOKEN,
-    #                       webhook_url='https://vk-status-check.herokuapp.com/'
-    #                                   + TELEGRAM_TOKEN)
     updater.start_polling()
 
 
